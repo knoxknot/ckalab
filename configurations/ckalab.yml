@@ -1,0 +1,10 @@
+- name: Configure Master
+  hosts: master
+  become: true
+  become_method: sudo
+  roles:
+    - common
+    - docker
+    - kubernetes
+
+

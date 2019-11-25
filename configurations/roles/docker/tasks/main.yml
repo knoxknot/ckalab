@@ -1,0 +1,35 @@
+---
+- name: Install Docker Key
+  apt_key: 
+   url: https://download.docker.com/linux/ubuntu/gpg  
+   state: present
+
+- name: Add Docker Source Repo
+  apt_repository: 
+   repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_lsb.codename}} stable 
+   state: present
+
+- name: Update Apt Cache
+  apt: 
+   update_cache: yes
+
+- name: Install Docker
+  apt:
+   name: docker-ce=5:18.09.1~3-0~ubuntu-xenial
+  notify: Start Docker
+
+- name: Configure Docker to Use Systemd
+  lineinfile:
+   path: /lib/systemd/system/docker.service
+   regexp: '^ExecStart=/usr/bin/dockerd'
+   line: 'ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd'
+  notify: Restart Docker
+
+- name: Add User to Docker Group
+  user:
+    name: "docker"
+    shell: /bin/bash
+    groups: 
+     - sudo
+    append: yes
+    state: present

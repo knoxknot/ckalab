@@ -1,0 +1,13 @@
+---
+- name: Install Secure Apt Transport
+  apt: 
+   name:  apt-transport-https
+
+- name: Add User to Sudo Group
+  user:
+    name: "{{ansible_user}}"
+    shell: /bin/bash
+    groups:
+     - sudo    
+    append: yes
+    state: present

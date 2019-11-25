@@ -1,0 +1,3 @@
+# This is the default ansible 'hosts' file.
+[master]
+172.28.128.3
