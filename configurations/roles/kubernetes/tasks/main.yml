@@ -24,30 +24,30 @@
 - name: Disable Swap
   command: swapoff -a
 
-- name: Bootstrap the Cluster 
-  command: >
-    kubeadm init
-    --apiserver-advertise-address="{{ansible_all_ipv4_addresses.0}}" 
-    --apiserver-cert-extra-sans="{{ansible_all_ipv4_addresses.0}}"
-    --node-name="{{ansible_hostname}}" 
-    --pod-network-cidr=10.244.0.0/16
-  run_once: yes   
+# - name: Bootstrap the Cluster 
+#   command: >
+#     kubeadm init
+#     --apiserver-advertise-address="{{ansible_all_ipv4_addresses.0}}" 
+#     --apiserver-cert-extra-sans="{{ansible_all_ipv4_addresses.0}}"
+#     --node-name="{{ansible_hostname}}" 
+#     --pod-network-cidr=10.244.0.0/16
+#   run_once: yes   
     
-- name: Create the Kube Directory
-  file:
-    path: $PWD/.kube
-    state: directory
-    mode: 0755
-    owner: vagrant    
+# - name: Create the Kube Directory
+#   file:
+#     path: $PWD/.kube
+#     state: directory
+#     mode: 0755
+#     owner: vagrant    
     
-- name: Copy kubeconfig to Users Kube Directory
-  copy:
-    src: /etc/kubernetes/admin.conf
-    dest: $PWD/.kube/config
-    remote_src: yes 
+# - name: Copy kubeconfig to Users Kube Directory
+#   copy:
+#     src: /etc/kubernetes/admin.conf
+#     dest: $PWD/.kube/config
+#     remote_src: yes 
 
-- name: Install a Pod Network Plugin
-  shell: kubectl apply -f 'https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')'
+# - name: Install a Pod Network Plugin
+#   shell: kubectl apply -f 'https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')'
     
-- name: Taint Master Node    
-  shell: kubectl taint nodes $HOSTNAME node-role.kubernetes.io/master-         
+# - name: Taint Master Node    
+#   shell: kubectl taint nodes $HOSTNAME node-role.kubernetes.io/master-         

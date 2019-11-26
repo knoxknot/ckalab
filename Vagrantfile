@@ -23,17 +23,17 @@ Vagrant.configure("2") do |config|
       ansible.playbook = "configurations/ckalab.yml"
     end
   end 
- 
+  
   # synchronize folders
-  config.vm.synced_folder ".", "/home/vagrant/ckalab", :owner => 'vagrant', :mount_options => ["dmode=774", "fmode=774"]
- 
+  config.vm.synced_folder ".", "/home/vagrant/ckalab",disabled: true
+
   # vm provider
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
     #vb.gui = true   
 
     # Correct this error Stderr: VBoxManage.exe: error: RawFile#0 failed to create the raw output 
-    #vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+    vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
 
     # Group the Machines
     vb.customize ["modifyvm", :id, "--groups", "/Kubernetes Cluster"]
@@ -45,6 +45,6 @@ Vagrant.configure("2") do |config|
     vb.cpus = "2"
 
     # Customize the amount of memory on the VM:
-    vb.memory = "1536"
+    vb.memory = "1280"
   end
 end
