@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  creationTimestamp: 2017-10-25T19:59:25Z
+  generation: 3
+  labels:
+    system: DaemonSetOne
+  name: ds-two
+  namespace: default
+  resourceVersion: "38142"
+  selfLink: /apis/extensions/v1beta1/namespaces/default/daemonsets/ds-one
+  uid: 0082ecfd-b9bf-11e7-894c-0a77bb381638
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      system: DaemonSetOne
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        system: DaemonSetOne
+    spec:
+      containers:
+      - image: nginx:1.8.1-alpine
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  templateGeneration: 3
+  updateStrategy:
+    type: RollingUpdate
