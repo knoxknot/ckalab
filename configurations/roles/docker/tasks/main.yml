@@ -27,9 +27,9 @@
 
 - name: Add User to Docker Group
   user:
-    name: "docker"
+    name: "{{ansible_user}}"
     shell: /bin/bash
     groups: 
-     - sudo
+     - docker
     append: yes
     state: present
