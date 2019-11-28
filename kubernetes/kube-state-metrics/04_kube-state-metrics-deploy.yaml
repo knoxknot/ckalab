@@ -28,7 +28,7 @@ spec:
         name: kube-state-metrics
         resources:
           requests:
-            cpu: 50m
+            cpu: 20m
             memory: 50Mi
         ports:
         - containerPort: 8080
